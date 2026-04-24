@@ -1,0 +1,11 @@
+services:
+  dockhand_exporter:
+    build: .
+    image: dockhand_exporter:latest
+    ports:
+      - "9090:9090"
+    environment:
+      DOCKHAND_URL: ${DOCKHAND_URL:-http://dockhand:3002}
+      DOCKHAND_TOKEN: ${DOCKHAND_TOKEN:-change_me}
+      LISTEN_ADDR: ${LISTEN_ADDR:-:9090}
+    restart: unless-stopped
