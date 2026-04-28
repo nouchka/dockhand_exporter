@@ -7,13 +7,13 @@ RUN go mod download
 
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o dockhand_exporter . && \
-    CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o healthcheck ./healthcheck
+    CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o healthcheck_bin ./healthcheck
 
 # ── minimal runtime image ─────────────────────────────────────────────────────
 FROM scratch
 
 COPY --from=builder /build/dockhand_exporter /dockhand_exporter
-COPY --from=builder /build/healthcheck /healthcheck
+COPY --from=builder /build/healthcheck_bin /healthcheck
 
 EXPOSE 9090
 
