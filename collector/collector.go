@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -211,6 +212,9 @@ func (c *DockhandCollector) Collect(ch chan<- prometheus.Metric) {
 		id := fmt.Sprintf("%d", h.ID)
 		name := h.Name
 		host := h.Host
+		if host == "" {
+			host = strings.ToLower(name)
+		}
 		labels := []string{id, name, host}
 
 		online := 0.0
